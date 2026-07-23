@@ -9,12 +9,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { ArrowRight, MessageCircle } from "lucide-react";
 
-// WhatsApp Number (Replace with actual)
-const WHATSAPP_NUMBER = "1234567890";
-
 const formSchema = z.object({
   name: z.string().min(2, "Name is required"),
   business: z.string().min(2, "Business name is required"),
+  department: z.string().min(1, "Please select a department"),
   service: z.string().min(1, "Please select a service"),
   budget: z.string().optional(),
   message: z.string().min(10, "Please provide more details about your project"),
@@ -40,10 +38,14 @@ export function Contact() {
     setIsRedirecting(true);
     
     // Construct WhatsApp Message
-    const msg = `Hello NeuricBuild! 👋\n\nName: ${data.name}\nBusiness: ${data.business}\nService: ${data.service}\nBudget: ${data.budget || 'Not specified'}\nPreferred Time: ${data.time || 'Anytime'}\n\nDetails: ${data.message}`;
+    const msg = `Hello NeuricBuild! 👋\n\nName: ${data.name}\nBusiness: ${data.business}\nDepartment: ${data.department}\nService: ${data.service}\nBudget: ${data.budget || 'Not specified'}\nPreferred Time: ${data.time || 'Anytime'}\n\nDetails: ${data.message}`;
     
     const encodedMsg = encodeURIComponent(msg);
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMsg}`;
+    const targetNumber = data.department === "Customer Support" 
+      ? process.env.NEXT_PUBLIC_WHATSAPP_CUSTOMER 
+      : process.env.NEXT_PUBLIC_WHATSAPP_BUSINESS;
+      
+    const whatsappUrl = `https://wa.me/${targetNumber}?text=${encodedMsg}`;
     
     // Simulate slight delay for UX
     setTimeout(() => {
@@ -71,11 +73,11 @@ export function Contact() {
             <MessageCircle className="h-8 w-8 text-primary drop-shadow-[0_0_15px_rgba(255,102,0,0.8)]" />
           </div>
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 leading-tight text-white drop-shadow-lg">
-            Let's Build Something <br />
+            Let&apos;s Build Something <br />
             <span className="font-light italic text-white/90">Incredible.</span>
           </h2>
           <p className="text-zinc-400 text-lg mb-10 max-w-md">
-            Skip the lengthy proposals. Fill out the form below and we'll immediately connect on WhatsApp to discuss your project.
+            Skip the lengthy proposals. Fill out the form below and we&apos;ll immediately connect on WhatsApp to discuss your project.
           </p>
           
           <div className="space-y-4">
@@ -119,10 +121,24 @@ export function Contact() {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-zinc-400">Service Interested In *</label>
-              <select 
-                {...register("service")}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-zinc-400">Department *</label>
+                <select 
+                  {...register("department")}
+                  className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors appearance-none"
+                >
+                  <option value="">Select a department...</option>
+                  <option value="Sales & Business">Sales & Business</option>
+                  <option value="Customer Support">Customer Support</option>
+                </select>
+                {errors.department && <p className="text-red-400 text-xs">{errors.department.message}</p>}
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-zinc-400">Service Interested In *</label>
+                <select 
+                  {...register("service")}
                 className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors appearance-none"
               >
                 <option value="">Select a service...</option>
@@ -132,6 +148,7 @@ export function Contact() {
                 <option value="Other">Other</option>
               </select>
               {errors.service && <p className="text-red-400 text-xs">{errors.service.message}</p>}
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

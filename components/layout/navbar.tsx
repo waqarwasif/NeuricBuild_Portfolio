@@ -31,7 +31,7 @@ export function Navbar() {
     <header
       className={cn(
         "fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-300",
-        scrolled ? "w-[calc(100%-2rem)] max-w-[1280px]" : "w-full max-w-[1280px] px-6"
+        scrolled ? "w-[calc(100%-2rem)] max-w-[1280px]" : "w-full max-w-[1280px] px-4 md:px-6 lg:px-8"
       )}
     >
       <div
@@ -66,10 +66,17 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden md:flex items-center">
-          <Button variant="default" className="group">
-            WhatsApp Us
-            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+        <div className="hidden md:flex items-center gap-3">
+          <Button asChild variant="default" className="group">
+            <a href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_BUSINESS}`} target="_blank" rel="noopener noreferrer">
+              Sales
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </a>
+          </Button>
+          <Button asChild variant="ghost">
+            <a href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_CUSTOMER}`} target="_blank" rel="noopener noreferrer">
+              Support
+            </a>
           </Button>
         </div>
 
@@ -101,10 +108,19 @@ export function Navbar() {
                {link.name}
              </Link>
             ))}
-            <Button variant="default" className="mt-4 w-full group">
-              WhatsApp Us
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Button>
+            <div className="mt-4 flex flex-col gap-3">
+              <Button asChild variant="default" className="w-full group">
+                <a href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_BUSINESS}`} target="_blank" rel="noopener noreferrer">
+                  Sales
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </a>
+              </Button>
+              <Button asChild variant="ghost" className="w-full">
+                <a href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_CUSTOMER}`} target="_blank" rel="noopener noreferrer">
+                  Support
+                </a>
+              </Button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

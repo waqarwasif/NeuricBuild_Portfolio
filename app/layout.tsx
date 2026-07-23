@@ -28,6 +28,7 @@ export default function RootLayout({
     <html lang="en" className="dark scroll-smooth">
       <body
         className={`${spaceGrotesk.variable} ${inter.variable} font-sans min-h-screen flex flex-col antialiased selection:bg-primary/30`}
+        suppressHydrationWarning
       >
         <Navbar />
         <main className="flex-1 flex flex-col">{children}</main>

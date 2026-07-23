@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { SectionContainer } from "@/components/ui/section-container";
 import { ArrowUpRight, X, Play } from "lucide-react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 import { useFirestoreCollection } from "@/hooks/useFirestoreCollection";
@@ -22,8 +23,31 @@ interface WorkItem {
 export function Portfolio() {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: "-10%" });
-  const { data: works, loading } = useFirestoreCollection<WorkItem>("portfolio");
+  const { data: webWorks, loading } = useFirestoreCollection<WorkItem>("portfolio");
   const [selectedWork, setSelectedWork] = useState<WorkItem | null>(null);
+  const [activeTab, setActiveTab] = useState<'web' | 'graphic'>('web');
+
+  const graphicWorks: WorkItem[] = [
+    { id: 'g1', client: 'Ayan', industry: 'Graphic Design', metric: 'Creative Direction', type: 'image', media: '/work/ayan-1.jpeg', colSpan: 'col-span-1 md:col-span-6 lg:col-span-4', height: 'h-[400px]' },
+    { id: 'g2', client: 'Ayan', industry: 'Graphic Design', metric: 'Brand Identity', type: 'image', media: '/work/ayan-2.jpeg', colSpan: 'col-span-1 md:col-span-6 lg:col-span-4', height: 'h-[400px]' },
+    { id: 'g3', client: 'Ayan', industry: 'Graphic Design', metric: 'Digital Art', type: 'image', media: '/work/ayan-3.jpeg', colSpan: 'col-span-1 md:col-span-6 lg:col-span-4', height: 'h-[400px]' },
+    { id: 'g4', client: 'Ayan', industry: 'Graphic Design', metric: 'Social Media', type: 'image', media: '/work/ayan-4.jpeg', colSpan: 'col-span-1 md:col-span-6 lg:col-span-6', height: 'h-[400px]' },
+    { id: 'g5', client: 'Ayan', industry: 'Graphic Design', metric: 'Visual Strategy', type: 'image', media: '/work/ayan-5.jpeg', colSpan: 'col-span-1 md:col-span-6 lg:col-span-6', height: 'h-[400px]' },
+
+    { id: 'g6', client: 'Kinza', industry: 'Graphic Design', metric: 'Detailing', type: 'image', media: '/work/kinza-1.jpeg', colSpan: 'col-span-1 md:col-span-6 lg:col-span-4', height: 'h-[400px]' },
+    { id: 'g7', client: 'Kinza', industry: 'Graphic Design', metric: 'Illustration', type: 'image', media: '/work/kinza-2.jpeg', colSpan: 'col-span-1 md:col-span-6 lg:col-span-4', height: 'h-[400px]' },
+    { id: 'g8', client: 'Kinza', industry: 'Graphic Design', metric: 'Creative', type: 'image', media: '/work/kinza-3.jpeg', colSpan: 'col-span-1 md:col-span-6 lg:col-span-4', height: 'h-[400px]' },
+    { id: 'g9', client: 'Kinza', industry: 'Graphic Design', metric: 'Typography', type: 'image', media: '/work/kinza-4.jpeg', colSpan: 'col-span-1 md:col-span-12 lg:col-span-12', height: 'h-[500px]' },
+
+    { id: 'g10', client: 'Other', industry: 'Graphic Design', metric: 'Concept Art', type: 'image', media: '/work/other-1.jpeg', colSpan: 'col-span-1 md:col-span-6 lg:col-span-4', height: 'h-[400px]' },
+    { id: 'g11', client: 'Other', industry: 'Graphic Design', metric: 'Marketing Assets', type: 'image', media: '/work/other-2.jpeg', colSpan: 'col-span-1 md:col-span-6 lg:col-span-4', height: 'h-[400px]' },
+    { id: 'g12', client: 'Other', industry: 'Graphic Design', metric: 'Print Media', type: 'image', media: '/work/other-3.png', colSpan: 'col-span-1 md:col-span-6 lg:col-span-4', height: 'h-[400px]' },
+    { id: 'g13', client: 'Other', industry: 'Graphic Design', metric: 'Packaging', type: 'image', media: '/work/other-4.png', colSpan: 'col-span-1 md:col-span-6 lg:col-span-4', height: 'h-[400px]' },
+    { id: 'g14', client: 'Other', industry: 'Graphic Design', metric: '3D Render', type: 'image', media: '/work/other-5.png', colSpan: 'col-span-1 md:col-span-6 lg:col-span-4', height: 'h-[400px]' },
+    { id: 'g15', client: 'Other', industry: 'Graphic Design', metric: 'Apparel', type: 'image', media: '/work/other-6.jpeg', colSpan: 'col-span-1 md:col-span-6 lg:col-span-4', height: 'h-[400px]' },
+  ];
+
+  const works = activeTab === 'web' ? webWorks : graphicWorks;
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -53,12 +77,34 @@ export function Portfolio() {
             <span className="font-light italic text-white/90">Build With Impact.</span>
           </h2>
         </motion.div>
-        
-
+        <div className="flex bg-white/5 backdrop-blur-md rounded-full p-1 border border-white/10 mt-6 md:mt-0 self-start md:self-end">
+          <button
+            onClick={() => setActiveTab('web')}
+            className={cn(
+              "px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300",
+              activeTab === 'web' 
+                ? "bg-primary text-white shadow-[0_0_20px_rgba(255,102,0,0.4)]" 
+                : "text-zinc-400 hover:text-white hover:bg-white/5"
+            )}
+          >
+            Web Work
+          </button>
+          <button
+            onClick={() => setActiveTab('graphic')}
+            className={cn(
+              "px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300",
+              activeTab === 'graphic' 
+                ? "bg-primary text-white shadow-[0_0_20px_rgba(255,102,0,0.4)]" 
+                : "text-zinc-400 hover:text-white hover:bg-white/5"
+            )}
+          >
+            Graphic Design
+          </button>
+        </div>
       </div>
 
       <div ref={containerRef} className="grid grid-cols-1 md:grid-cols-12 gap-6 relative z-10">
-        {loading ? (
+        {loading && activeTab === 'web' ? (
           Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className={`rounded-3xl bg-white/5 animate-pulse h-[400px] ${i === 0 ? 'col-span-1 md:col-span-12 lg:col-span-8' : i === 1 ? 'col-span-1 md:col-span-6 lg:col-span-4' : i === 2 ? 'col-span-1 md:col-span-6 lg:col-span-6' : 'col-span-1 md:col-span-12 lg:col-span-6'}`} />
           ))
@@ -84,10 +130,11 @@ export function Portfolio() {
                   className="w-full h-full object-cover transform transition-transform duration-[1.5s] ease-out group-hover:scale-105"
                 />
               ) : (
-                <img 
+                <Image 
                   src={work.media} 
-                  alt={work.client} 
-                  className="w-full h-full object-cover transform transition-transform duration-[1.5s] ease-out group-hover:scale-105"
+                  alt={work.client}
+                  fill 
+                  className="object-cover transform transition-transform duration-[1.5s] ease-out group-hover:scale-105"
                 />
               )}
             </div>
@@ -110,7 +157,9 @@ export function Portfolio() {
                   <span className="inline-block px-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-white text-[10px] font-bold uppercase tracking-wider mb-3">
                     {work.industry}
                   </span>
-                  <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-1 drop-shadow-md">{work.client}</h3>
+                  <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-1 drop-shadow-md">
+                    {activeTab === 'graphic' ? work.client=='Other'?'':`By ${work.client}` : work.client}
+                  </h3>
                   <p className="text-zinc-300 font-medium text-sm md:text-base">{work.metric}</p>
                 </div>
                 
@@ -162,10 +211,11 @@ export function Portfolio() {
                   className="w-full h-full max-h-[85vh] object-contain"
                 />
               ) : (
-                <img 
+                <Image 
                   src={selectedWork.media} 
-                  alt={selectedWork.client} 
-                  className="w-full h-full max-h-[85vh] object-contain"
+                  alt={selectedWork.client}
+                  fill 
+                  className="object-contain"
                 />
               )}
               
@@ -174,7 +224,9 @@ export function Portfolio() {
                 <span className="inline-block px-3 py-1 rounded-full bg-primary/20 border border-primary/50 text-primary text-[10px] font-bold uppercase tracking-wider mb-2">
                   {selectedWork.industry}
                 </span>
-                <h3 className="font-display text-3xl font-bold text-white drop-shadow-md">{selectedWork.client}</h3>
+                <h3 className="font-display text-3xl font-bold text-white drop-shadow-md">
+                  {activeTab === 'graphic' ? selectedWork.client=='Other'?'Other Designs':`By ${selectedWork.client}` : selectedWork.client}    
+                </h3>
                 <p className="text-zinc-300">{selectedWork.metric}</p>
               </div>
             </motion.div>

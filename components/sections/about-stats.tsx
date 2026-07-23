@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { SectionContainer } from "@/components/ui/section-container";
 import { Zap, Globe2, Users2, Timer } from "lucide-react";
-import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export function AboutStats() {
   const containerRef = useRef(null);
@@ -30,10 +30,10 @@ export function AboutStats() {
           </h2>
           <div className="space-y-6 text-lg text-zinc-400">
             <p>
-              NeuricBuild wasn't founded to be just another traditional agency. We are an AI-augmented team that leverages advanced tooling to cut development times in half without sacrificing quality.
+              NeuricBuild wasn&apos;t founded to be just another traditional agency. We are an AI-augmented team that leverages advanced tooling to cut development times in half without sacrificing quality.
             </p>
             <p>
-              Whether you're establishing a new digital footprint or scaling your operations to the next level, we build the systems, content, and experiences that turn visitors into loyal customers and drive sustainable growth.
+              Whether you&apos;re establishing a new digital footprint or scaling your operations to the next level, we build the systems, content, and experiences that turn visitors into loyal customers and drive sustainable growth.
             </p>
           </div>
         </motion.div>
@@ -47,7 +47,7 @@ export function AboutStats() {
             transition={{ duration: 1 }}
             className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] z-0 opacity-40 pointer-events-none [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_70%)]"
           >
-            <img src="/images/about_visual.png" alt="AI Speed Visual" className="w-full h-full object-cover mix-blend-screen" />
+            <Image src="/images/about_visual.png" alt="AI Speed Visual" fill className="object-cover mix-blend-screen" />
           </motion.div>
           
           {/* Background Ambient Glow */}

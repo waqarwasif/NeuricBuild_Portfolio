@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { X, PlayCircle } from "lucide-react";
+import { X } from "lucide-react";
 import { useEffect } from "react";
 
 const TwitterIcon = ({ className }: { className?: string }) => (
@@ -119,6 +119,7 @@ export function TeamProfileModal({ member, isOpen, onClose }: TeamProfileModalPr
                             src={member.imageUrl}
                             alt={member.name}
                             fill
+                            sizes="96px"
                             className="object-cover"
                           />
                         </div>
@@ -171,7 +172,7 @@ export function TeamProfileModal({ member, isOpen, onClose }: TeamProfileModalPr
                   <div className="w-full bg-[#dcdcdc] rounded-[24px] p-6 flex flex-col relative overflow-hidden">
                     <div className="flex items-center gap-2 mb-4">
                       <div className="w-8 h-8 rounded-full overflow-hidden relative shadow-sm">
-                        <Image src={member.imageUrl} alt={member.name} fill className="object-cover" />
+                        <Image src={member.imageUrl} alt={member.name} fill sizes="32px" className="object-cover" />
                       </div>
                       <span className="text-sm font-bold text-black flex items-center gap-1">
                         {member.name.split(' ')[0]}
@@ -180,12 +181,9 @@ export function TeamProfileModal({ member, isOpen, onClose }: TeamProfileModalPr
                         </svg>
                       </span>
                     </div>
-                    <p className="text-sm text-zinc-800 leading-relaxed mb-6">
+                    <p className="text-sm text-zinc-800 leading-relaxed mb-2">
                       {member.bio}
                     </p>
-                    <button className="w-full bg-zinc-900 text-white rounded-full py-3.5 text-sm font-bold hover:bg-black transition-colors shadow-lg">
-                      View Work
-                    </button>
                   </div>
                 </div>
 

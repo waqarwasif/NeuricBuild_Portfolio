@@ -50,7 +50,7 @@ export function Services() {
             </h2>
           </div>
           <div className="max-w-md text-zinc-400 text-sm md:text-base leading-relaxed border-l border-white/10 pl-6 xl:mb-4">
-            We don't just build basic websites. We deploy complete, high-performance digital ecosystems designed to eliminate bottlenecks and aggressively accelerate your brand's growth.
+            We don&apos;t just build apps; we engineer automated ecosystems. Whether you need an intelligent conversational agent or a sophisticated workflow, we construct solutions that amplify human capability and drive autonomous growth.
           </div>
         </motion.div>
 

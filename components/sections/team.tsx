@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { SectionContainer } from "@/components/ui/section-container";
 import Image from "next/image";
@@ -54,8 +54,10 @@ export function Team() {
 
   useEffect(() => {
     if (!loading && team.length > 0 && !activeMember) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setActiveMember(getOwnerId());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [team, loading, activeMember]);
 
   return (
@@ -114,12 +116,13 @@ export function Team() {
                   onClick={() => setActiveMember(member.id)}
                   className={`relative cursor-pointer overflow-hidden rounded-[40px] transition-all duration-700 ease-in-out h-[450px] md:h-full ${
                     isActive ? "md:flex-[3.2]" : "md:flex-[1.2]"
-                  } bg-zinc-900 border ${isActive ? "border-primary/50 shadow-[0_0_30px_rgba(255,102,0,0.2)]" : "border-white/10"} group ${offsetClass}`}
+                  } bg-zinc-900 border ${isActive ? "border-primary/50 shadow-[0_0_30px_rgba(255,102,0,0.2)]" : "border-white/10"} group ${offsetClass} ${member.id === getOwnerId() ? 'order-first md:order-none' : ''}`}
                 >
                   <Image
                     src={member.imageUrl}
                     alt={member.name}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className={`object-cover transition-all duration-700 ease-in-out ${
                       isActive ? "opacity-60 md:opacity-40" : "opacity-40 grayscale group-hover:grayscale-0"
                     } object-[center_top] md:object-center`}

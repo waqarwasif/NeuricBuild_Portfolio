@@ -1,17 +1,23 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { collection, onSnapshot, DocumentData, query, orderBy } from "firebase/firestore";
+import { collection, onSnapshot, DocumentData, query } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 export function useFirestoreCollection<T = DocumentData>(collectionName: string) {
+  // Initialize loading to true so it doesn't need to be set synchronously in the effect
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    setLoading(true);
-    
+    if (!db) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setLoading(false);
+      setError("Database configuration missing.");
+      return;
+    }
+
     // We use onSnapshot for real-time live updates!
     const q = query(collection(db, collectionName));
     
@@ -22,18 +28,18 @@ export function useFirestoreCollection<T = DocumentData>(collectionName: string)
           ...doc.data()
         })) as T[];
         
-        // Try to sort by an 'order' field if it exists, or 'id' if it's numeric/string sortable
+        // Try to sort by an 'order' field if it exists, or 'id' if it's numeric/string so items are consistent
         docs.sort((a: any, b: any) => {
-          if (a.order !== undefined && b.order !== undefined) return a.order - b.order;
+          if (typeof a.order === 'number' && typeof b.order === 'number') return a.order - b.order;
           if (a.id && b.id) return String(a.id).localeCompare(String(b.id), undefined, { numeric: true });
           return 0;
         });
 
         setData(docs);
         setError(null);
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error(`Error processing ${collectionName}:`, err);
-        setError(err.message);
+        setError(err instanceof Error ? err.message : "Unknown error");
       } finally {
         setLoading(false);
       }

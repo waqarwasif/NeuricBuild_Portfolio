@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -39,7 +39,7 @@ export function Hero() {
     const airpods = { frame: 0 };
 
     for (let i = 0; i < frameCount; i++) {
-      const img = new Image();
+      const img = new window.Image();
       const paddedIndex = (i + 1).toString().padStart(4, "0");
       img.src = `/hero-sequence/frame-${paddedIndex}.webp`;
       images.push(img);
@@ -157,8 +157,8 @@ export function Hero() {
       </div>
 
       {/* Hero Content */}
-      <div ref={contentRef} className="relative z-10 mx-auto w-full max-w-[1280px] px-6 h-full flex flex-col justify-center mt-20">
-        <div className="flex flex-col gap-12 lg:gap-8 items-start lg:w-2/3">
+      <div ref={contentRef} className="relative z-10 mx-auto w-full max-w-[1280px] px-4 md:px-6 h-full flex flex-col justify-start md:justify-center pt-[120px] md:pt-0 pb-16 md:pb-0">
+        <div className="flex flex-col gap-8 md:gap-12 lg:gap-8 items-start w-full lg:w-2/3">
           
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -206,7 +206,7 @@ export function Hero() {
                 <div className="flex -space-x-3">
                   {[1,2,3].map((i) => (
                     <div key={i} className="h-10 w-10 rounded-full border-2 border-black overflow-hidden relative z-10 hover:scale-125 hover:z-30 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-all duration-300 cursor-pointer">
-                      <img src={`https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&auto=format&fit=crop&crop=faces&fit=crop`} alt="avatar" className="w-full h-full object-cover" />
+                      <Image width={40} height={40} src={`https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&auto=format&fit=crop&crop=faces&fit=crop`} alt="avatar" className="w-full h-full object-cover" />
                     </div>
                   ))}
                 </div>

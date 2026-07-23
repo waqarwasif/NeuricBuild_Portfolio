@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { SectionContainer } from "@/components/ui/section-container";
 import { Quote } from "lucide-react";
+import Image from "next/image";
 import { useFirestoreCollection } from "@/hooks/useFirestoreCollection";
 
 interface Testimonial {
@@ -35,7 +36,7 @@ export function Testimonials() {
             <span className="text-xs font-display font-medium uppercase tracking-[0.08em] text-zinc-400">Client Success</span>
           </div>
           <h2 className="font-display text-4xl md:text-5xl font-bold mb-6 tracking-tight text-white drop-shadow-lg">
-            Don't Just Take Our <span className="font-light italic text-white/90">Word</span>.
+            Don&apos;t Just Take Our <span className="font-light italic text-white/90">Word</span>.
           </h2>
         </motion.div>
       </div>
@@ -58,12 +59,12 @@ export function Testimonials() {
               <div className="relative z-10 flex flex-col md:flex-row gap-8 items-center md:items-start justify-between">
                 <div className="max-w-3xl">
                   <p className="font-display text-2xl md:text-3xl lg:text-4xl text-white leading-tight mb-8 drop-shadow-md">
-                    "{testimonials[0].quote}"
+                    &quot;{testimonials[0].quote}&quot;
                   </p>
                   <div className="flex items-center gap-4">
                     <div className="h-14 w-14 rounded-full bg-black border border-white/20 overflow-hidden relative">
                       {testimonials[0].image && (
-                        <img src={testimonials[0].image} alt={testimonials[0].author} className="w-full h-full object-cover" />
+                        <Image src={testimonials[0].image} alt={testimonials[0].author} fill className="object-cover" />
                       )}
                     </div>
                     <div>
@@ -92,14 +93,14 @@ export function Testimonials() {
               <div key={testimonial.id} className="min-w-[300px] md:min-w-[400px] bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 snap-start hover:bg-white/10 transition-colors flex flex-col justify-between">
                 <div>
                   <Quote className="h-8 w-8 text-primary/40 mb-4" />
-                  <p className="text-zinc-300 text-lg mb-8">
-                    "{testimonial.quote}"
+                  <p className="text-zinc-400 max-w-xl mx-auto md:mx-0">
+                    Don&apos;t just take our word for it. Here&apos;s what our clients have to say about working with NeuricBuild.
                   </p>
                 </div>
                 <div className="flex items-center gap-4">
                   {testimonial.image && (
-                    <div className="h-10 w-10 rounded-full bg-black border border-white/20 overflow-hidden relative shrink-0">
-                      <img src={testimonial.image} alt={testimonial.author} className="w-full h-full object-cover" />
+                    <div className="h-12 w-12 rounded-full overflow-hidden border border-white/20">
+                      <Image width={48} height={48} src={testimonial.image} alt={testimonial.author} className="h-full w-full object-cover" />
                     </div>
                   )}
                   <div>

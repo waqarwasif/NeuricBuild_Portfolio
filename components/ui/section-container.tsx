@@ -11,10 +11,10 @@ export function SectionContainer({
 }: SectionContainerProps) {
   return (
     <section
-      className={cn("py-16 md:py-[120px] w-full", className)}
+      className={cn("py-16 md:py-24 lg:py-[120px] w-full overflow-hidden", className)}
       {...props}
     >
-      <div className="mx-auto w-full max-w-[1280px] px-6">
+      <div className="mx-auto w-full max-w-[1280px] px-4 md:px-6 lg:px-8">
         {children}
       </div>
     </section>

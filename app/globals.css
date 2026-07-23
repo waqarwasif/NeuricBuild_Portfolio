@@ -22,6 +22,18 @@
     background-color: var(--color-bg-base);
     color: var(--color-text-body);
   }
+
+  /* Prevent image downloading, dragging, and right-clicking */
+  img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    user-select: none;
+    -webkit-user-select: none;
+    pointer-events: none;
+  }
 }
 
 @layer utilities {

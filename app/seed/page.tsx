@@ -63,6 +63,7 @@ export default function SeedPage() {
     setIsSeeding(true);
     setStatus("Seeding starting...");
     try {
+      if (!db) throw new Error("Firestore is not initialized");
       for (const [collectionName, items] of Object.entries(seedData)) {
         setStatus(`Seeding ${collectionName}...`);
         for (const item of items) {
@@ -71,9 +72,9 @@ export default function SeedPage() {
         }
       }
       setStatus("Database seeded successfully! All data is now in Firebase.");
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error seeding database:", error);
-      setStatus(`Error: ${error.message}`);
+      setStatus(`Error: ${error instanceof Error ? error.message : "Unknown error"}`);
     } finally {
       setIsSeeding(false);
     }
